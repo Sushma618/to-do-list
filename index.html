@@ -3,33 +3,55 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <meta name="description" content="A professional Todo List application">
+    <title>Todo List App</title>
     <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="images/favicon.png">
 </head>
 <body>
-    <div class = "container">
-        
-        <div class="todo">
-       <h2> TO-DO <img-src> </img-src></h2>
-<div class = "row">
-<input type="text" id=""input-box" placeholder="Add your text" >
-<button> Add</button>
-
-
-</div>
-<ul id="list"> 
-    <li>
-        <li>
-            <li>
-
-            </li>
-        </li>
-    </li>
-</ul>
-        </div>
-
-     
-    </div>
-    
+    <main class="container">
+        <section class="todo">
+            <header>
+                <h1>To-Do List <img src="images/icon.png" alt="todo-icon"></h1>
+                <div class="todo-stats">
+                    <span id="tasks-count">0 tasks</span>
+                    <span id="completed-count">0 completed</span>
+                </div>
+            </header>
+            <div class="filters">
+                <button class="filter-btn active" data-filter="all">All</button>
+                <button class="filter-btn" data-filter="active">Active</button>
+                <button class="filter-btn" data-filter="completed">Completed</button>
+                <select id="sort-tasks" class="sort-select">
+                    <option value="newest">Newest First</option>
+                    <option value="oldest">Oldest First</option>
+                    <option value="az">A-Z</option>
+                    <option value="za">Z-A</option>
+                </select>
+            </div>
+            <form class="row" onsubmit="handleSubmit(event)">
+                <input type="text" 
+                       id="input-box" 
+                       placeholder="Add your task"
+                       aria-label="New task input">
+                <input type="date" 
+                       id="due-date" 
+                       aria-label="Due date">
+                <select id="priority" aria-label="Priority">
+                    <option value="low">Low</option>
+                    <option value="medium">Medium</option>
+                    <option value="high">High</option>
+                </select>
+                <button type="submit">Add Task</button>
+            </form>
+            <ul id="list-container" class="task-list"></ul>
+            <div class="actions">
+                <button id="clear-completed" class="secondary-btn">Clear Completed</button>
+                <button id="clear-all" class="danger-btn">Clear All</button>
+            </div>
+        </section>
+    </main>
+    <script src="script.js"></script>
 </body>
 </html>
