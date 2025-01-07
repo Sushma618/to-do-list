@@ -3,19 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simple Todo List</title>
+    <title>Cute Todo List</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="container">
         <div class="todo-app">
-            <h2>Todo List</h2>
+            <h2>
+                <span class="header-emoji">📝</span>
+                Todo List
+                <span class="header-emoji">✨</span>
+            </h2>
             <form class="input-section" onsubmit="handleSubmit(event)">
                 <input type="text" id="input-box" placeholder="Add your task">
-                <button type="submit">Add</button>
+                <button type="submit">
+                    <span class="add-emoji">➕</span>
+                </button>
             </form>
             <ul id="list-container"></ul>
+            <div class="empty-state" id="empty-state">
+                <div class="empty-emoji">🌟</div>
+                <p>No tasks yet! Add some tasks to get started</p>
+                <div class="empty-emoji-bottom">🦋</div>
+            </div>
         </div>
     </div>
     <script src="script.js"></script>

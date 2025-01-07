@@ -2,8 +2,10 @@ class TodoList {
     constructor() {
         this.inputBox = document.getElementById("input-box");
         this.listContainer = document.getElementById("list-container");
+        this.emptyState = document.getElementById("empty-state");
         this.setupEventListeners();
         this.loadTasks();
+        this.updateEmptyState();
     }
 
     setupEventListeners() {
@@ -14,14 +16,33 @@ class TodoList {
         const item = e.target.closest('li');
         if (e.target.classList.contains('checkbox')) {
             this.toggleTask(item);
+            this.playCompletionSound();
         } else if (e.target.classList.contains('delete-btn')) {
             this.deleteTask(item);
         }
     }
 
-    toggleTask(taskElement) {
-        taskElement.classList.toggle("checked");
-        this.saveData();
+    playCompletionSound() {
+        const audio = new Audio('https://www.soundjay.com/buttons/sounds/button-09.mp3');
+        audio.volume = 0.2;
+        audio.play().catch(e => console.log('Sound autoplay prevented'));
+        
+        const emoji = document.createElement('div');
+        emoji.textContent = '✨';
+        emoji.style.cssText = `
+            position: fixed;
+            font-size: 2rem;
+            pointer-events: none;
+            animation: floatUp 1s ease-out forwards;
+        `;
+        document.body.appendChild(emoji);
+        
+        setTimeout(() => emoji.remove(), 1000);
+    }
+
+    updateEmptyState() {
+        const isEmpty = this.listContainer.children.length === 0;
+        this.emptyState.classList.toggle('visible', isEmpty);
     }
 
     addTask(taskText) {
@@ -44,7 +65,7 @@ class TodoList {
         
         const deleteBtn = document.createElement("span");
         deleteBtn.className = "delete-btn";
-        deleteBtn.innerHTML = "×";
+        deleteBtn.innerHTML = "❌";
 
         taskContent.appendChild(checkbox);
         taskContent.appendChild(taskTextSpan);
@@ -53,6 +74,7 @@ class TodoList {
         
         this.listContainer.appendChild(li);
         this.saveData();
+        this.updateEmptyState();
         return true;
     }
 
@@ -61,7 +83,13 @@ class TodoList {
         setTimeout(() => {
             taskElement.remove();
             this.saveData();
+            this.updateEmptyState();
         }, 300);
+    }
+
+    toggleTask(taskElement) {
+        taskElement.classList.toggle("checked");
+        this.saveData();
     }
 
     saveData() {
@@ -70,6 +98,7 @@ class TodoList {
 
     loadTasks() {
         this.listContainer.innerHTML = localStorage.getItem("todoData") || "";
+        this.updateEmptyState();
     }
 }
 
